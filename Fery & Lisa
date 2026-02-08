@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Undangan Pernikahan Fery & Lisa</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Georgia, serif;
+      background: #fafafa;
+      color: #333;
+      text-align: center;
+      line-height: 1.7;
+    }
+    section {
+      padding: 70px 20px;
+      max-width: 720px;
+      margin: auto;
+    }
+    h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    .cover {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: #ffffff;
+    }
+    .btn {
+      margin-top: 35px;
+      padding: 14px 30px;
+      font-size: 16px;
+      border: none;
+      background: #222;
+      color: #fff;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .divider {
+      margin: 40px 0;
+      font-size: 20px;
+    }
+    table {
+      margin: 30px auto;
+      border-collapse: collapse;
+    }
+    table td {
+      padding: 10px 20px;
+    }
+    footer {
+      padding: 60px 20px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- AUDIO -->
+<audio id="bgm" loop>
+  <source src="musik.mp3" type="audio/mpeg">
+</audio>
+
+<!-- COVER -->
+<section class="cover">
+  <h1>Undangan Pernikahan</h1>
+  <h2>Fery Yasin & Lisa Wahyu Ningsih</h2>
+
+  <p>
+    Dengan memohon rahmat dan ridho Allah SWT,<br>
+    kami bermaksud mengundang Bapak/Ibu/Saudara/i<br>
+    untuk menghadiri pernikahan kami.
+  </p>
+
+  <p>
+    📅 Minggu, 27 Juli 2027<br>
+    📍 Surabaya
+  </p>
+
+  <button class="btn" onclick="playMusic()">
+    Buka Undangan & Putar Musik
+  </button>
+</section>
+
+<!-- AYAT -->
+<section>
+  <p>
+    “Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan
+    pasangan-pasangan untukmu agar kamu cenderung dan merasa tenteram
+    kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang.”
+  </p>
+  <p><em>(QS. Ar-Rum: 21)</em></p>
+</section>
+
+<!-- MEMPELAI -->
+<section>
+  <h2>Mempelai</h2>
+
+  <p>
+    <strong>Fery Yasin</strong><br>
+    Putra dari Bapak <strong>Udin Haryono</strong><br>
+    dan Ibu <strong>Darti</strong>
+  </p>
+
+  <div class="divider">—</div>
+
+  <p>
+    <strong>Lisa Wahyu Ningsih</strong><br>
+    Putri dari Bapak <strong>Wahyu Wimpy Rumahlaiselan</strong><br>
+    dan Ibu <strong>Lilis Istining Widya</strong>
+  </p>
+</section>
+
+<!-- ACARA -->
+<section>
+  <h2>Detail Acara</h2>
+
+  <table>
+    <tr>
+      <td>Akad Nikah</td>
+      <td>08.00 WIB</td>
+    </tr>
+    <tr>
+      <td>Resepsi</td>
+      <td>11.00 – 13.00 WIB</td>
+    </tr>
+  </table>
+
+  <p><strong>Minggu, 27 Juli 2027</strong></p>
+</section>
+
+<!-- LOKASI -->
+<section>
+  <h2>Lokasi Akad Nikah</h2>
+
+  <p>
+    <strong>Kantor Urusan Agama</strong><br>
+    Gg. Bengkok II No. 1<br>
+    Baratajaya, Kec. Gubeng<br>
+    Surabaya
+  </p>
+
+  <!-- ganti link Google Maps di bawah -->
+  <p>
+    <a href="https://maps.google.com" target="_blank">
+      Buka Google Maps
+    </a>
+  </p>
+</section>
+
+<!-- PENUTUP -->
+<footer>
+  <p>
+    Merupakan suatu kehormatan dan kebahagiaan bagi kami
+    apabila Bapak/Ibu/Saudara/i berkenan hadir
+    serta memberikan doa restu.
+  </p>
+
+  <p>
+    Atas perhatian dan kehadirannya,
+    kami ucapkan terima kasih.
+  </p>
+
+  <p><strong>Fery Yasin & Lisa Wahyu Ningsih</strong></p>
+</footer>
+
+<script>
+  function playMusic() {
+    const audio = document.getElementById("bgm");
+    audio.play();
+    document.querySelector(".btn").style.display = "none";
+  }
+</script>
+
+</body>
+</html>
