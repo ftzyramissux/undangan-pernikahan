@@ -3,182 +3,142 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Undangan Pernikahan Fery & Lisa</title>
+  <title>Undangan Pernikahan</title>
 
   <style>
     body {
       margin: 0;
-      font-family: Georgia, serif;
+      font-family: "Arial", sans-serif;
       background: #fafafa;
-      color: #333;
-      text-align: center;
-      line-height: 1.7;
     }
-    section {
-      padding: 70px 20px;
-      max-width: 720px;
-      margin: auto;
-    }
-    h1 {
-      font-size: 32px;
-      margin-bottom: 10px;
-    }
-    h2 {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-    .cover {
-      min-height: 100vh;
+
+    /* ================= COVER / AMPLOP ================= */
+    #cover {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #c9a24d, #f5e6c8);
       display: flex;
-      flex-direction: column;
       justify-content: center;
-      background: #ffffff;
+      align-items: center;
+      z-index: 999;
     }
-    .btn {
-      margin-top: 35px;
-      padding: 14px 30px;
-      font-size: 16px;
+
+    .envelope {
+      background: white;
+      padding: 35px 30px;
+      border-radius: 14px;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+      animation: float 2s ease-in-out infinite;
+    }
+
+    .envelope h1 {
+      margin: 0;
+      font-size: 26px;
+    }
+
+    .envelope p {
+      margin: 10px 0 20px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .envelope button {
+      padding: 12px 28px;
       border: none;
-      background: #222;
-      color: #fff;
-      border-radius: 6px;
+      background: #c9a24d;
+      color: white;
+      font-size: 16px;
+      border-radius: 25px;
       cursor: pointer;
     }
-    .divider {
-      margin: 40px 0;
-      font-size: 20px;
+
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
     }
-    table {
-      margin: 30px auto;
-      border-collapse: collapse;
+
+    /* ================= ISI UNDANGAN ================= */
+    #content {
+      display: none;
+      padding: 40px 20px;
+      text-align: center;
     }
-    table td {
-      padding: 10px 20px;
+
+    .section {
+      margin-bottom: 40px;
     }
-    footer {
-      padding: 60px 20px;
-      font-size: 14px;
+
+    h2 {
+      color: #c9a24d;
+      margin-bottom: 10px;
     }
   </style>
 </head>
 
 <body>
 
-<!-- AUDIO -->
-<audio id="bgm" loop>
-  <source src="musik.mp3" type="audio/mpeg">
-</audio>
+  <!-- AUDIO -->
+  <audio id="bgMusic" loop>
+    <source src="musik.mp3" type="audio/mpeg">
+  </audio>
 
-<!-- COVER -->
-<section class="cover">
-  <h1>Undangan Pernikahan</h1>
-  <h2>Fery Yasin & Lisa Wahyu Ningsih</h2>
+  <!-- COVER -->
+  <div id="cover">
+    <div class="envelope">
+      <h1>Fery & Lisa</h1>
+      <p>Wedding Invitation</p>
+      <button onclick="openInvitation()">Buka Undangan</button>
+    </div>
+  </div>
 
-  <p>
-    Dengan memohon rahmat dan ridho Allah SWT,<br>
-    kami bermaksud mengundang Bapak/Ibu/Saudara/i<br>
-    untuk menghadiri pernikahan kami.
-  </p>
+  <!-- ISI UNDANGAN -->
+  <div id="content">
 
-  <p>
-    📅 Minggu, 27 Juli 2027<br>
-    📍 Surabaya
-  </p>
+    <div class="section">
+      <h2>Undangan Pernikahan</h2>
+      <p>Dengan memohon rahmat dan ridho Allah SWT,<br>
+      kami mengundang Bapak/Ibu/Saudara/i<br>
+      untuk menghadiri pernikahan kami.</p>
+    </div>
 
-  <button class="btn" onclick="playMusic()">
-    Buka Undangan & Putar Musik
-  </button>
-</section>
+    <div class="section">
+      <h2>Fery</h2>
+      <p>Putra dari Bapak ... & Ibu ...</p>
+      <h2>&</h2>
+      <h2>Lisa</h2>
+      <p>Putri dari Bapak ... & Ibu ...</p>
+    </div>
 
-<!-- AYAT -->
-<section>
-  <p>
-    “Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan
-    pasangan-pasangan untukmu agar kamu cenderung dan merasa tenteram
-    kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang.”
-  </p>
-  <p><em>(QS. Ar-Rum: 21)</em></p>
-</section>
+    <div class="section">
+      <h2>Akad & Resepsi</h2>
+      <p>
+        Minggu, 10 Maret 2026<br>
+        Pukul 10.00 WIB<br>
+        Gedung Serbaguna
+      </p>
+    </div>
 
-<!-- MEMPELAI -->
-<section>
-  <h2>Mempelai</h2>
+    <div class="section">
+      <p>Merupakan suatu kehormatan dan kebahagiaan<br>
+      bagi kami apabila Bapak/Ibu/Saudara/i<br>
+      berkenan hadir dan memberikan doa restu.</p>
+    </div>
 
-  <p>
-    <strong>Fery Yasin</strong><br>
-    Putra dari Bapak <strong>Udin Haryono</strong><br>
-    dan Ibu <strong>Darti</strong>
-  </p>
+  </div>
 
-  <div class="divider">—</div>
+  <!-- SCRIPT -->
+  <script>
+    function openInvitation() {
+      const music = document.getElementById("bgMusic");
+      const cover = document.getElementById("cover");
+      const content = document.getElementById("content");
 
-  <p>
-    <strong>Lisa Wahyu Ningsih</strong><br>
-    Putri dari Bapak <strong>Wahyu Wimpy Rumahlaiselan</strong><br>
-    dan Ibu <strong>Lilis Istining Widya</strong>
-  </p>
-</section>
-
-<!-- ACARA -->
-<section>
-  <h2>Detail Acara</h2>
-
-  <table>
-    <tr>
-      <td>Akad Nikah</td>
-      <td>08.00 WIB</td>
-    </tr>
-    <tr>
-      <td>Resepsi</td>
-      <td>11.00 – 13.00 WIB</td>
-    </tr>
-  </table>
-
-  <p><strong>Minggu, 27 Juli 2027</strong></p>
-</section>
-
-<!-- LOKASI -->
-<section>
-  <h2>Lokasi Akad Nikah</h2>
-
-  <p>
-    <strong>Kantor Urusan Agama</strong><br>
-    Gg. Bengkok II No. 1<br>
-    Baratajaya, Kec. Gubeng<br>
-    Surabaya
-  </p>
-
-  <!-- ganti link Google Maps di bawah -->
-  <p>
-    <a href="https://maps.google.com" target="_blank">
-      Buka Google Maps
-    </a>
-  </p>
-</section>
-
-<!-- PENUTUP -->
-<footer>
-  <p>
-    Merupakan suatu kehormatan dan kebahagiaan bagi kami
-    apabila Bapak/Ibu/Saudara/i berkenan hadir
-    serta memberikan doa restu.
-  </p>
-
-  <p>
-    Atas perhatian dan kehadirannya,
-    kami ucapkan terima kasih.
-  </p>
-
-  <p><strong>Fery Yasin & Lisa Wahyu Ningsih</strong></p>
-</footer>
-
-<script>
-  function playMusic() {
-    const audio = document.getElementById("bgm");
-    audio.play();
-    document.querySelector(".btn").style.display = "none";
-  }
-</script>
+      music.play();
+      cover.style.display = "none";
+      content.style.display = "block";
+    }
+  </script>
 
 </body>
 </html>
