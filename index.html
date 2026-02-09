@@ -56,19 +56,22 @@ body{
   transition:opacity .6s ease;
 }
 
-/* Amplop kecil (STATIS) */
+/* amplop kecil */
 .envelope{
   width:220px;
   height:140px;
   border:1px solid rgba(184,164,106,.7);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:transparent;
+  position:relative;
 }
 
-/* isi amplop */
 .envelope-inner{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 0;
   text-align:center;
 }
 
@@ -84,10 +87,13 @@ body{
   height:1px;
   background:var(--gold);
   opacity:.5;
-  margin:14px auto;
 }
 
 .seal{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
   width:46px;
   height:46px;
   border-radius:50%;
@@ -105,18 +111,17 @@ body{
   color:var(--gold);
 }
 
+@keyframes pulse{
+  0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.8;}
+  50%{transform:translate(-50%,-50%) scale(1.08);opacity:1;}
+}
+
 .tamu{
-  margin-top:12px;
   font-size:13px;
   opacity:.8;
 }
 
-@keyframes pulse{
-  0%,100%{transform:scale(1);opacity:.8;}
-  50%{transform:scale(1.08);opacity:1;}
-}
-
-/* cover hilang */
+/* cover hide */
 #cover.open{
   opacity:0;
   pointer-events:none;
@@ -132,7 +137,11 @@ body{
   text-align:center;
 }
 
-.section{margin-bottom:80px;}
+.section{
+  margin-bottom:80px;
+  will-change:transform,opacity;
+  transition:opacity .4s ease, transform .4s ease;
+}
 
 h2{
   color:var(--gold);
@@ -248,7 +257,7 @@ const p=new URLSearchParams(location.search);
 const t=p.get("to");
 if(t) document.getElementById("namaTamu").innerText=t;
 
-/* musik play sekali sampai selesai */
+/* musik play sekali */
 const music=document.getElementById("bgMusic");
 let started=false;
 
@@ -257,7 +266,6 @@ function openInvitation(){
     music.play();
     started=true;
   }
-
   const cover=document.getElementById("cover");
   cover.classList.add("open");
 
@@ -267,6 +275,34 @@ function openInvitation(){
     document.getElementById("frame").classList.add("show");
   },600);
 }
+
+/* micro parallax + fade (edge only) */
+(() => {
+  const sections=document.querySelectorAll(".section");
+  function apply(){
+    const vh=window.innerHeight;
+    sections.forEach(el=>{
+      const r=el.getBoundingClientRect();
+      let offset=0,opacity=1;
+
+      if(r.top<vh*0.25){
+        const p=Math.max(r.top/(vh*0.25),0);
+        offset=(1-p)*-8;
+        opacity=p;
+      }
+      if(vh-r.bottom<vh*0.25){
+        const p=Math.max((vh-r.bottom)/(vh*0.25),0);
+        offset=(1-p)*8;
+        opacity=p;
+      }
+      el.style.transform=`translateY(${offset}px)`;
+      el.style.opacity=opacity;
+    });
+  }
+  window.addEventListener("scroll",apply,{passive:true});
+  window.addEventListener("resize",apply);
+  apply();
+})();
 </script>
 
 </body>
