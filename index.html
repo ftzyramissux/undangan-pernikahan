@@ -3,106 +3,95 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Undangan Pernikahan Fery & Lisa</title>
+<title>Undangan Pernikahan</title>
 
 <style>
-body {
-  margin: 0;
-  font-family: 'Georgia', serif;
-  background: #0b0b0b;
-  color: #f2d27d;
+:root{
+  --bg:#0f0f0f;
+  --gold:#bfa76a;
+  --text:#eaeaea;
+}
+
+body{
+  margin:0;
+  font-family: "Georgia", serif;
+  background:var(--bg);
+  color:var(--text);
 }
 
 /* ===== COVER ===== */
-#cover {
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle at top, #222, #000);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
+#cover{
+  position:fixed;
+  inset:0;
+  background:var(--bg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:10;
+  transition:opacity .8s ease;
 }
 
-.envelope {
-  width: 300px;
-  height: 190px;
-  background: #111;
-  border: 2px solid #d4af37;
-  position: relative;
+.cover-box{
+  border:1px solid var(--gold);
+  padding:40px 30px;
+  text-align:center;
+  max-width:300px;
 }
 
-.envelope::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-  border-left: 150px solid transparent;
-  border-right: 150px solid transparent;
-  border-bottom: 95px solid #d4af37;
-  transform-origin: top;
-  transition: transform 1s ease;
+.cover-box h1{
+  margin:0;
+  font-size:26px;
+  letter-spacing:1px;
+  color:var(--gold);
 }
 
-.envelope.open::before {
-  transform: rotateX(180deg);
+.cover-box p{
+  font-size:14px;
+  margin:12px 0 20px;
+  opacity:.85;
 }
 
-.card {
-  position: absolute;
-  inset: 12px;
-  background: #000;
-  border: 1px solid #d4af37;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+.cover-box button{
+  border:1px solid var(--gold);
+  background:transparent;
+  color:var(--gold);
+  padding:10px 26px;
+  cursor:pointer;
+  transition:.3s;
 }
 
-.card h1 {
-  margin: 0;
-  font-size: 22px;
+.cover-box button:hover{
+  background:var(--gold);
+  color:#000;
 }
 
-.card p {
-  font-size: 13px;
-  margin: 6px 0;
-}
-
-.card button {
-  margin-top: 10px;
-  padding: 8px 22px;
-  border-radius: 20px;
-  border: none;
-  background: #d4af37;
-  color: #000;
-  font-weight: bold;
-  cursor: pointer;
+.tamu{
+  font-size:13px;
+  margin-top:6px;
+  opacity:.9;
 }
 
 /* ===== CONTENT ===== */
-#content {
-  display: none;
-  padding: 50px 20px;
-  text-align: center;
+#content{
+  display:none;
+  padding:60px 20px;
+  text-align:center;
+  animation:fadeUp 1s ease;
 }
 
-.section {
-  margin-bottom: 45px;
+.section{
+  margin-bottom:50px;
 }
 
-h2 {
-  color: #d4af37;
-  letter-spacing: 1px;
+h2{
+  color:var(--gold);
+  letter-spacing:1px;
+  margin-bottom:14px;
 }
 
-.tamu {
-  font-size: 14px;
-  color: #f5e6b3;
-  margin-bottom: 15px;
+@keyframes fadeUp{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
 }
 </style>
 </head>
@@ -115,13 +104,11 @@ h2 {
 
 <!-- COVER -->
 <div id="cover">
-  <div class="envelope" id="envelope">
-    <div class="card">
-      <h1>Fery & Lisa</h1>
-      <p>Kepada Yth</p>
-      <div class="tamu" id="namaTamu">Tamu Undangan</div>
-      <button onclick="openInvitation()">Buka Undangan</button>
-    </div>
+  <div class="cover-box">
+    <h1>Fery & Lisa</h1>
+    <p>Kepada Yth</p>
+    <div class="tamu" id="namaTamu">Tamu Undangan</div>
+    <button onclick="openInvitation()">Buka Undangan</button>
   </div>
 </div>
 
@@ -159,11 +146,9 @@ h2 {
     <h2>Akad Nikah</h2>
     <p>
       Minggu, 27 Juli 2027<br>
-      Pukul 08.00 WIB<br>
-      Kantor Urusan Agama<br>
-      Gg. Bengkok II No.1<br>
-      Baratajaya, Kec. Gubeng<br>
-      Surabaya
+      08.00 WIB<br>
+      KUA Gg. Bengkok II No.1<br>
+      Baratajaya, Gubeng – Surabaya
     </p>
   </div>
 
@@ -171,11 +156,9 @@ h2 {
     <h2>Resepsi</h2>
     <p>
       Minggu, 27 Juli 2027<br>
-      Pukul 11.00 – 13.00 WIB<br>
-      Kantor Urusan Agama<br>
-      Gg. Bengkok II No.1<br>
-      Baratajaya, Kec. Gubeng<br>
-      Surabaya
+      11.00 – 13.00 WIB<br>
+      KUA Gg. Bengkok II No.1<br>
+      Baratajaya, Gubeng – Surabaya
     </p>
   </div>
 
@@ -187,30 +170,20 @@ h2 {
     </p>
   </div>
 
-  <div class="section">
-    <h2>Wassalamu’alaikum Warahmatullahi Wabarakatuh</h2>
-    <p>Fery Yasin & Lisa Wahyu Ningsih</p>
-  </div>
-
 </div>
 
 <script>
-/* Nama tamu dari URL */
 const params = new URLSearchParams(window.location.search);
 const tamu = params.get("to");
-if (tamu) {
-  document.getElementById("namaTamu").innerText = tamu;
-}
+if(tamu) document.getElementById("namaTamu").innerText = tamu;
 
-/* Buka undangan */
-function openInvitation() {
-  document.getElementById("envelope").classList.add("open");
+function openInvitation(){
   document.getElementById("bgMusic").play();
-
-  setTimeout(() => {
-    document.getElementById("cover").style.display = "none";
-    document.getElementById("content").style.display = "block";
-  }, 900);
+  document.getElementById("cover").style.opacity="0";
+  setTimeout(()=>{
+    document.getElementById("cover").style.display="none";
+    document.getElementById("content").style.display="block";
+  },700);
 }
 </script>
 
