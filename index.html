@@ -12,21 +12,46 @@
   --text:#e6e6e6;
 }
 
+*{box-sizing:border-box;}
+
 body{
   margin:0;
   background:var(--bg);
   color:var(--text);
   font-family:"Georgia", serif;
   line-height:1.7;
-  overflow-x:hidden;
 }
 
-/* ================= AMPLOP COVER ================= */
+/* ================= FRAME ================= */
+.frame{
+  position:fixed;
+  inset:16px;
+  pointer-events:none;
+  z-index:50;
+  opacity:0;
+  transition:opacity .6s ease;
+}
+.frame.show{opacity:1;}
+.frame span{
+  position:absolute;
+  width:30px;
+  height:30px;
+  border-style:solid;
+  border-color:rgba(184,164,106,.45);
+}
+.frame .tl{top:0;left:0;border-width:1px 0 0 1px;}
+.frame .tr{top:0;right:0;border-width:1px 1px 0 0;}
+.frame .bl{bottom:0;left:0;border-width:0 0 1px 1px;}
+.frame .br{bottom:0;right:0;border-width:0 1px 1px 0;}
+
+/* ================= COVER ================= */
 #cover{
   position:fixed;
   inset:0;
+  background:var(--bg);
   display:flex;
-  z-index:10;
+  z-index:100;
+  overflow:hidden;
 }
 
 .panel{
@@ -35,46 +60,40 @@ body{
   transition:transform 1.2s ease;
 }
 
-.panel.left{
-  border-right:1px solid rgba(184,164,106,.25);
-}
-
-.panel.right{
-  border-left:1px solid rgba(184,164,106,.25);
-}
+.panel.left{border-right:1px solid rgba(184,164,106,.25);}
+.panel.right{border-left:1px solid rgba(184,164,106,.25);}
 
 #cover.open .left{transform:translateX(-100%);}
 #cover.open .right{transform:translateX(100%);}
 
-/* ===== CENTER SEAL ===== */
+/* center content */
 .cover-center{
   position:absolute;
   inset:0;
   display:flex;
   align-items:center;
   justify-content:center;
-  pointer-events:auto;
+  transition:opacity .4s ease;
+}
+#cover.open .cover-center{
+  opacity:0;
+  pointer-events:none;
 }
 
-.center-box{
-  text-align:center;
-}
-
+.center-box{text-align:center;}
 .center-box h1{
   margin:0;
   font-size:28px;
   letter-spacing:2px;
   color:var(--gold);
 }
-
 .line{
   width:140px;
   height:1px;
   background:var(--gold);
-  margin:22px auto;
-  opacity:.6;
+  opacity:.5;
+  margin:20px auto;
 }
-
 .seal{
   width:64px;
   height:64px;
@@ -83,22 +102,18 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  margin:auto;
   cursor:pointer;
   animation:pulse 2.4s ease-in-out infinite;
 }
-
 .seal span{
   font-size:12px;
   letter-spacing:2px;
   color:var(--gold);
 }
-
 @keyframes pulse{
-  0%,100%{transform:scale(1); opacity:.85;}
-  50%{transform:scale(1.08); opacity:1;}
+  0%,100%{transform:scale(1);opacity:.8;}
+  50%{transform:scale(1.08);opacity:1;}
 }
-
 .tamu{
   margin-top:14px;
   font-size:14px;
@@ -108,19 +123,23 @@ body{
 /* ================= CONTENT ================= */
 #content{
   display:none;
+}
+
+/* SAFE AREA */
+.safe{
   max-width:600px;
   margin:auto;
-  padding:100px 28px;
+  padding:120px 36px;
   text-align:center;
 }
 
-.section{margin-bottom:70px;}
+.section{margin-bottom:80px;}
 
 h2{
   color:var(--gold);
-  font-size:16px;
+  font-size:15px;
   letter-spacing:2px;
-  margin-bottom:20px;
+  margin-bottom:24px;
 }
 
 .small{
@@ -128,38 +147,12 @@ h2{
   opacity:.85;
 }
 
-/* ================= CORNER GAP FRAME ================= */
-.frame{
-  position:fixed;
-  inset:14px;
-  pointer-events:none;
-  z-index:9999;
-  opacity:0;
-  transition:opacity .8s ease;
-}
-
-.frame.show{opacity:1}
-
-.frame span{
-  position:absolute;
-  width:32px;
-  height:32px;
-  border-style:solid;
-  border-color:rgba(184,164,106,.55);
-}
-
-.frame .tl{top:0;left:0;border-width:1px 0 0 1px;}
-.frame .tr{top:0;right:0;border-width:1px 1px 0 0;}
-.frame .bl{bottom:0;left:0;border-width:0 0 1px 1px;}
-.frame .br{bottom:0;right:0;border-width:0 1px 1px 0;}
-
-/* ================= MAP CARD ================= */
+/* ================= MAP ================= */
 .map-card{
-  margin-top:24px;
-  border:1px solid rgba(184,164,106,.35);
-  padding:14px;
+  margin-top:28px;
+  border:1px solid rgba(184,164,106,.3);
+  padding:12px;
 }
-
 .map-card iframe{
   width:100%;
   height:220px;
@@ -176,12 +169,12 @@ h2{
   <span class="bl"></span><span class="br"></span>
 </div>
 
-<!-- AUDIO (PLAY SEKALI SAMPAI SELESAI) -->
+<!-- AUDIO -->
 <audio id="bgMusic" preload="auto">
   <source src="musik.mp3" type="audio/mpeg">
 </audio>
 
-<!-- COVER AMPLOP -->
+<!-- COVER -->
 <div id="cover">
   <div class="panel left"></div>
   <div class="panel right"></div>
@@ -190,13 +183,8 @@ h2{
     <div class="center-box">
       <h1>FERY & LISA</h1>
       <div class="line"></div>
-
-      <div class="seal" onclick="openInvitation()">
-        <span>OPEN</span>
-      </div>
-
+      <div class="seal" onclick="openInvitation()"><span>OPEN</span></div>
       <div class="tamu" id="namaTamu">Tamu Undangan</div>
-
       <div class="line"></div>
     </div>
   </div>
@@ -204,75 +192,78 @@ h2{
 
 <!-- CONTENT -->
 <div id="content">
+  <div class="safe">
 
-  <div class="section">
-    <p class="small">
-      Assalamu’alaikum Warahmatullahi Wabarakatuh<br><br>
-      Dengan memohon rahmat dan ridho Allah SWT,<br>
-      kami mengundang Anda untuk hadir pada pernikahan kami
-    </p>
-  </div>
-
-  <div class="section">
-    <h2>MEMPELAI</h2>
-    <p>
-      <strong>Fery Yasin</strong><br>
-      Putra Bapak Udin Haryono & Ibu Darti
-      <br><br>
-      <strong>Lisa Wahyu Ningsih</strong><br>
-      Putri Bapak Wahyu Wimpy Rumahlaiselan & Ibu Lilis Istining Widya
-    </p>
-  </div>
-
-  <div class="section">
-    <h2>LOKASI & ACARA</h2>
-    <p>
-      Minggu, 27 Juli 2027<br>
-      08.00 WIB – Akad Nikah<br>
-      11.00 – 13.00 WIB – Resepsi
-      <br><br>
-      Kantor Urusan Agama<br>
-      Gg. Bengkok II No.1<br>
-      Baratajaya, Gubeng, Surabaya
-    </p>
-
-    <div class="map-card">
-      <iframe
-        src="https://www.google.com/maps?q=Kantor+Urusan+Agama+Gg.+Bengkok+II+No.1+Surabaya&output=embed"
-        loading="lazy">
-      </iframe>
+    <div class="section">
+      <p class="small">
+        Assalamu’alaikum Warahmatullahi Wabarakatuh<br><br>
+        Dengan memohon rahmat dan ridho Allah SWT,<br>
+        kami mengundang Anda untuk hadir pada pernikahan kami
+      </p>
     </div>
-  </div>
 
-  <div class="section">
-    <p class="small">
-      Merupakan kehormatan bagi kami<br>
-      atas kehadiran dan doa restu Anda
-    </p>
-  </div>
+    <div class="section">
+      <h2>MEMPELAI</h2>
+      <p>
+        <strong>Fery Yasin</strong><br>
+        Putra Bapak Udin Haryono & Ibu Darti
+        <br><br>
+        <strong>Lisa Wahyu Ningsih</strong><br>
+        Putri Bapak Wahyu Wimpy Rumahlaiselan & Ibu Lilis Istining Widya
+      </p>
+    </div>
 
+    <div class="section">
+      <h2>LOKASI & ACARA</h2>
+      <p>
+        Minggu, 27 Juli 2027<br>
+        08.00 WIB – Akad Nikah<br>
+        11.00 – 13.00 WIB – Resepsi
+        <br><br>
+        Kantor Urusan Agama<br>
+        Gg. Bengkok II No.1<br>
+        Baratajaya, Gubeng, Surabaya
+      </p>
+
+      <div class="map-card">
+        <iframe
+          src="https://www.google.com/maps?q=Kantor+Urusan+Agama+Gg.+Bengkok+II+No.1+Surabaya&output=embed"
+          loading="lazy">
+        </iframe>
+      </div>
+    </div>
+
+    <div class="section">
+      <p class="small">
+        Merupakan kehormatan bagi kami<br>
+        atas kehadiran dan doa restu Anda
+      </p>
+    </div>
+
+  </div>
 </div>
 
 <script>
-/* Nama tamu */
-const params = new URLSearchParams(location.search);
-const tamu = params.get("to");
-if(tamu) document.getElementById("namaTamu").innerText = tamu;
+/* nama tamu */
+const p=new URLSearchParams(location.search);
+const t=p.get("to");
+if(t) document.getElementById("namaTamu").innerText=t;
 
-/* Musik play SEKALI */
-let started = false;
-const music = document.getElementById("bgMusic");
+/* audio play sekali */
+const music=document.getElementById("bgMusic");
+let started=false;
 
 function openInvitation(){
   if(!started){
     music.play();
-    started = true;
+    started=true;
   }
 
-  document.getElementById("cover").classList.add("open");
+  const cover=document.getElementById("cover");
+  cover.classList.add("open");
 
   setTimeout(()=>{
-    document.getElementById("cover").style.display="none";
+    cover.remove();
     document.getElementById("content").style.display="block";
     document.getElementById("frame").classList.add("show");
   },1200);
