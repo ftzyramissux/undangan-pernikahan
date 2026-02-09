@@ -22,7 +22,7 @@ body{
   line-height:1.7;
 }
 
-/* ===== FRAME ===== */
+/* ================= FRAME ================= */
 .frame{
   position:fixed;
   inset:16px;
@@ -44,7 +44,7 @@ body{
 .frame .bl{bottom:0;left:0;border-width:0 0 1px 1px;}
 .frame .br{bottom:0;right:0;border-width:0 1px 1px 0;}
 
-/* ===== COVER ===== */
+/* ================= COVER ================= */
 #cover{
   position:fixed;
   inset:0;
@@ -119,7 +119,7 @@ body{
   pointer-events:none;
 }
 
-/* ===== CONTENT ===== */
+/* ================= CONTENT ================= */
 #content{display:none;}
 
 .safe{
@@ -133,7 +133,6 @@ body{
   margin-bottom:90px;
 }
 
-/* per BARIS (bukan per kata) */
 .text-line{
   display:block;
   transition:opacity .35s ease, transform .35s ease;
@@ -152,7 +151,7 @@ h2{
   opacity:.9;
 }
 
-/* ===== MAP ===== */
+/* ================= MAP ================= */
 .map-card{
   margin-top:28px;
   border:1px solid rgba(184,164,106,.3);
@@ -162,6 +161,17 @@ h2{
   width:100%;
   height:220px;
   border:0;
+}
+
+/* ================= QR POPUP ================= */
+#qrPopup{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.92);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
 }
 </style>
 </head>
@@ -211,7 +221,7 @@ h2{
       <h2>MEMPELAI</h2>
       <p>
         Fery Yasin<br>
-        Putra Bapak Udin Haryono & Ibu Samah<br><br>
+        Putra Bapak Udin Haryono & Ibu Darti<br><br>
         Lisa Wahyu Ningsih<br>
         Putri Bapak Wahyu Wimpy Rumahlaiselan & Ibu Lilis Istining Widya
       </p>
@@ -236,6 +246,88 @@ h2{
       </div>
     </div>
 
+    <!-- ================= KIRIM HADIAH ================= -->
+    <div class="section">
+      <h2>KIRIM HADIAH</h2>
+
+      <p>
+        Doa restu Anda merupakan hadiah terindah bagi kami.<br>
+        Namun apabila berkenan, kami menyediakan amplop digital
+        sebagai bentuk kasih dan dukungan.
+      </p>
+
+      <!-- QRIS -->
+      <div style="margin-top:32px">
+        <img
+          src="qris.png"
+          onclick="openQR()"
+          style="
+            width:220px;
+            cursor:pointer;
+            border:1px solid rgba(184,164,106,.45);
+            padding:12px;
+            background:#000;
+          "
+        >
+        <p class="small" style="margin-top:12px">
+          Tap QR untuk memperbesar
+        </p>
+      </div>
+
+      <!-- BCA -->
+      <div style="margin-top:32px">
+        <p>
+          <strong>Bank BCA</strong><br>
+          <span id="rek-bca">0640641835</span><br>
+          a.n. Lisa
+        </p>
+
+        <button onclick="copyText('rek-bca','copied-bca')"
+          style="
+            margin-top:12px;
+            padding:10px 22px;
+            background:transparent;
+            color:var(--gold);
+            border:1px solid rgba(184,164,106,.6);
+            cursor:pointer;
+            letter-spacing:2px;
+          ">
+          SALIN REKENING
+        </button>
+
+        <p id="copied-bca" class="small" style="display:none;margin-top:10px">
+          Nomor rekening disalin
+        </p>
+      </div>
+
+      <!-- USDT -->
+      <div style="margin-top:40px">
+        <p>
+          <strong>USDT (Plasma)</strong><br>
+          <span id="rek-usdt" style="word-break:break-all">
+            0x43af6d642f7de3eb1e2d197e862d7b572c563e5d
+          </span>
+        </p>
+
+        <button onclick="copyText('rek-usdt','copied-usdt')"
+          style="
+            margin-top:12px;
+            padding:10px 22px;
+            background:transparent;
+            color:var(--gold);
+            border:1px solid rgba(184,164,106,.6);
+            cursor:pointer;
+            letter-spacing:2px;
+          ">
+          SALIN ALAMAT
+        </button>
+
+        <p id="copied-usdt" class="small" style="display:none;margin-top:10px">
+          Alamat USDT disalin
+        </p>
+      </div>
+    </div>
+
     <div class="section">
       <p class="small">
         Merupakan kehormatan bagi kami<br>
@@ -246,20 +338,52 @@ h2{
   </div>
 </div>
 
+<!-- ================= QR POPUP ================= -->
+<div id="qrPopup" onclick="closeQR()">
+  <div style="position:relative">
+    <div
+      onclick="closeQR()"
+      style="
+        position:absolute;
+        top:-40px;
+        right:-10px;
+        color:var(--gold);
+        font-size:22px;
+        cursor:pointer;
+      ">
+      ✕
+    </div>
+
+    <img
+      src="qris.png"
+      style="
+        max-width:90vw;
+        max-height:80vh;
+        border:1px solid rgba(184,164,106,.6);
+        padding:14px;
+        background:#000;
+      "
+    >
+    <p class="small" style="margin-top:14px">
+      Tap di luar area QR untuk menutup
+    </p>
+  </div>
+</div>
+
 <script>
 /* ===== Nama tamu ===== */
-const p = new URLSearchParams(location.search);
-const t = p.get("to");
-if(t) document.getElementById("namaTamu").innerText = decodeURIComponent(t).trim();
+const p=new URLSearchParams(location.search);
+const t=p.get("to");
+if(t) document.getElementById("namaTamu").innerText=decodeURIComponent(t).trim();
 
 /* ===== Musik ===== */
-const music = document.getElementById("bgMusic");
-let started = false;
+const music=document.getElementById("bgMusic");
+let started=false;
 
 function openInvitation(){
   if(!started){
     music.play();
-    started = true;
+    started=true;
   }
   document.getElementById("cover").classList.add("open");
   setTimeout(()=>{
@@ -271,15 +395,14 @@ function openInvitation(){
   },600);
 }
 
-/* ===== Bungkus BARIS berdasarkan <br> ===== */
+/* ===== Bungkus per baris (berdasarkan <br>) ===== */
 function wrapByBreak(){
   document.querySelectorAll(".section p").forEach(p=>{
     if(p.dataset.wrapped) return;
     p.dataset.wrapped="1";
 
-    const parts = p.innerHTML.split(/<br\s*\/?>/i);
+    const parts=p.innerHTML.split(/<br\s*\/?>/i);
     p.innerHTML="";
-
     parts.forEach((part,i)=>{
       const span=document.createElement("span");
       span.className="text-line";
@@ -290,35 +413,49 @@ function wrapByBreak(){
   });
 }
 
-/* ===== Fade hanya saat menyentuh frame ===== */
+/* ===== Fade di dekat frame ===== */
 function applyFade(){
-  const vh = window.innerHeight;
-  const zone = 90;
-
+  const vh=window.innerHeight;
+  const zone=90;
   document.querySelectorAll(".text-line").forEach(el=>{
-    const r = el.getBoundingClientRect();
-    let opacity = 1;
-    let offset = 0;
+    const r=el.getBoundingClientRect();
+    let opacity=1,offset=0;
 
-    if(r.top < zone){
-      const p = Math.max(r.top/zone,0);
-      opacity = p;
-      offset = (1-p)*-6;
+    if(r.top<zone){
+      const p=Math.max(r.top/zone,0);
+      opacity=p;
+      offset=(1-p)*-6;
     }
-
-    if(vh - r.bottom < zone){
-      const p = Math.max((vh-r.bottom)/zone,0);
-      opacity = p;
-      offset = (1-p)*6;
+    if(vh-r.bottom<zone){
+      const p=Math.max((vh-r.bottom)/zone,0);
+      opacity=p;
+      offset=(1-p)*6;
     }
-
-    el.style.opacity = opacity;
-    el.style.transform = `translateY(${offset}px)`;
+    el.style.opacity=opacity;
+    el.style.transform=`translateY(${offset}px)`;
   });
 }
 
-window.addEventListener("scroll", applyFade, {passive:true});
-window.addEventListener("resize", applyFade);
+window.addEventListener("scroll",applyFade,{passive:true});
+window.addEventListener("resize",applyFade);
+
+/* ===== QR POPUP ===== */
+function openQR(){
+  document.getElementById("qrPopup").style.display="flex";
+}
+function closeQR(){
+  document.getElementById("qrPopup").style.display="none";
+}
+
+/* ===== COPY ===== */
+function copyText(id,msgId){
+  const text=document.getElementById(id).innerText.trim();
+  navigator.clipboard.writeText(text).then(()=>{
+    const msg=document.getElementById(msgId);
+    msg.style.display="block";
+    setTimeout(()=>msg.style.display="none",2000);
+  });
+}
 </script>
 
 </body>
