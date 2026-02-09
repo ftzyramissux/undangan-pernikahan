@@ -1,144 +1,218 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Undangan Pernikahan</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Undangan Pernikahan Fery & Lisa</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: "Arial", sans-serif;
-      background: #fafafa;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: 'Georgia', serif;
+  background: #0b0b0b;
+  color: #f2d27d;
+}
 
-    /* ================= COVER / AMPLOP ================= */
-    #cover {
-      position: fixed;
-      inset: 0;
-      background: linear-gradient(135deg, #c9a24d, #f5e6c8);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-    }
+/* ===== COVER ===== */
+#cover {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at top, #222, #000);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
 
-    .envelope {
-      background: white;
-      padding: 35px 30px;
-      border-radius: 14px;
-      text-align: center;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-      animation: float 2s ease-in-out infinite;
-    }
+.envelope {
+  width: 300px;
+  height: 190px;
+  background: #111;
+  border: 2px solid #d4af37;
+  position: relative;
+}
 
-    .envelope h1 {
-      margin: 0;
-      font-size: 26px;
-    }
+.envelope::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 150px solid transparent;
+  border-right: 150px solid transparent;
+  border-bottom: 95px solid #d4af37;
+  transform-origin: top;
+  transition: transform 1s ease;
+}
 
-    .envelope p {
-      margin: 10px 0 20px;
-      font-size: 14px;
-      color: #555;
-    }
+.envelope.open::before {
+  transform: rotateX(180deg);
+}
 
-    .envelope button {
-      padding: 12px 28px;
-      border: none;
-      background: #c9a24d;
-      color: white;
-      font-size: 16px;
-      border-radius: 25px;
-      cursor: pointer;
-    }
+.card {
+  position: absolute;
+  inset: 12px;
+  background: #000;
+  border: 1px solid #d4af37;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
 
-    @keyframes float {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
+.card h1 {
+  margin: 0;
+  font-size: 22px;
+}
 
-    /* ================= ISI UNDANGAN ================= */
-    #content {
-      display: none;
-      padding: 40px 20px;
-      text-align: center;
-    }
+.card p {
+  font-size: 13px;
+  margin: 6px 0;
+}
 
-    .section {
-      margin-bottom: 40px;
-    }
+.card button {
+  margin-top: 10px;
+  padding: 8px 22px;
+  border-radius: 20px;
+  border: none;
+  background: #d4af37;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-    h2 {
-      color: #c9a24d;
-      margin-bottom: 10px;
-    }
-  </style>
+/* ===== CONTENT ===== */
+#content {
+  display: none;
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.section {
+  margin-bottom: 45px;
+}
+
+h2 {
+  color: #d4af37;
+  letter-spacing: 1px;
+}
+
+.tamu {
+  font-size: 14px;
+  color: #f5e6b3;
+  margin-bottom: 15px;
+}
+</style>
 </head>
 
 <body>
 
-  <!-- AUDIO -->
-  <audio id="bgMusic" loop>
-    <source src="musik.mp3" type="audio/mpeg">
-  </audio>
+<audio id="bgMusic" loop>
+  <source src="musik.mp3" type="audio/mpeg">
+</audio>
 
-  <!-- COVER -->
-  <div id="cover">
-    <div class="envelope">
+<!-- COVER -->
+<div id="cover">
+  <div class="envelope" id="envelope">
+    <div class="card">
       <h1>Fery & Lisa</h1>
-      <p>Wedding Invitation</p>
+      <p>Kepada Yth</p>
+      <div class="tamu" id="namaTamu">Tamu Undangan</div>
       <button onclick="openInvitation()">Buka Undangan</button>
     </div>
   </div>
+</div>
 
-  <!-- ISI UNDANGAN -->
-  <div id="content">
+<!-- CONTENT -->
+<div id="content">
 
-    <div class="section">
-      <h2>Undangan Pernikahan</h2>
-      <p>Dengan memohon rahmat dan ridho Allah SWT,<br>
-      kami mengundang Bapak/Ibu/Saudara/i<br>
-      untuk menghadiri pernikahan kami.</p>
-    </div>
-
-    <div class="section">
-      <h2>Fery</h2>
-      <p>Putra dari Bapak ... & Ibu ...</p>
-      <h2>&</h2>
-      <h2>Lisa</h2>
-      <p>Putri dari Bapak ... & Ibu ...</p>
-    </div>
-
-    <div class="section">
-      <h2>Akad & Resepsi</h2>
-      <p>
-        Minggu, 10 Maret 2026<br>
-        Pukul 10.00 WIB<br>
-        Gedung Serbaguna
-      </p>
-    </div>
-
-    <div class="section">
-      <p>Merupakan suatu kehormatan dan kebahagiaan<br>
-      bagi kami apabila Bapak/Ibu/Saudara/i<br>
-      berkenan hadir dan memberikan doa restu.</p>
-    </div>
-
+  <div class="section">
+    <h2>Assalamu’alaikum Warahmatullahi Wabarakatuh</h2>
+    <p>
+      Dengan memohon rahmat dan ridho Allah SWT,<br>
+      kami mengundang Bapak Ibu Saudara Saudari<br>
+      untuk menghadiri pernikahan kami.
+    </p>
   </div>
 
-  <!-- SCRIPT -->
-  <script>
-    function openInvitation() {
-      const music = document.getElementById("bgMusic");
-      const cover = document.getElementById("cover");
-      const content = document.getElementById("content");
+  <div class="section">
+    <h2>Mempelai Pria</h2>
+    <p>
+      <strong>Fery Yasin</strong><br>
+      Putra dari Bapak Udin Haryono<br>
+      dan Ibu Darti
+    </p>
+  </div>
 
-      music.play();
-      cover.style.display = "none";
-      content.style.display = "block";
-    }
-  </script>
+  <div class="section">
+    <h2>Mempelai Wanita</h2>
+    <p>
+      <strong>Lisa Wahyu Ningsih</strong><br>
+      Putri dari Bapak Wahyu Wimpy Rumahlaiselan<br>
+      dan Ibu Lilis Istining Widya
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>Akad Nikah</h2>
+    <p>
+      Minggu, 27 Juli 2027<br>
+      Pukul 08.00 WIB<br>
+      Kantor Urusan Agama<br>
+      Gg. Bengkok II No.1<br>
+      Baratajaya, Kec. Gubeng<br>
+      Surabaya
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>Resepsi</h2>
+    <p>
+      Minggu, 27 Juli 2027<br>
+      Pukul 11.00 – 13.00 WIB<br>
+      Kantor Urusan Agama<br>
+      Gg. Bengkok II No.1<br>
+      Baratajaya, Kec. Gubeng<br>
+      Surabaya
+    </p>
+  </div>
+
+  <div class="section">
+    <p>
+      Merupakan suatu kehormatan dan kebahagiaan bagi kami<br>
+      apabila Bapak Ibu Saudara Saudari<br>
+      berkenan hadir dan memberikan doa restu.
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>Wassalamu’alaikum Warahmatullahi Wabarakatuh</h2>
+    <p>Fery Yasin & Lisa Wahyu Ningsih</p>
+  </div>
+
+</div>
+
+<script>
+/* Nama tamu dari URL */
+const params = new URLSearchParams(window.location.search);
+const tamu = params.get("to");
+if (tamu) {
+  document.getElementById("namaTamu").innerText = tamu;
+}
+
+/* Buka undangan */
+function openInvitation() {
+  document.getElementById("envelope").classList.add("open");
+  document.getElementById("bgMusic").play();
+
+  setTimeout(() => {
+    document.getElementById("cover").style.display = "none";
+    document.getElementById("content").style.display = "block";
+  }, 900);
+}
+</script>
 
 </body>
 </html>
