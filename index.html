@@ -22,7 +22,7 @@ body{
   line-height:1.7;
 }
 
-/* ================= FRAME ================= */
+/* ===== FRAME ===== */
 .frame{
   position:fixed;
   inset:16px;
@@ -44,7 +44,7 @@ body{
 .frame .bl{bottom:0;left:0;border-width:0 0 1px 1px;}
 .frame .br{bottom:0;right:0;border-width:0 1px 1px 0;}
 
-/* ================= COVER ================= */
+/* ===== COVER ===== */
 #cover{
   position:fixed;
   inset:0;
@@ -101,18 +101,12 @@ body{
   align-items:center;
   justify-content:center;
   cursor:pointer;
-  animation:pulse 2.4s ease-in-out infinite;
 }
 
 .seal span{
   font-size:11px;
   letter-spacing:2px;
   color:var(--gold);
-}
-
-@keyframes pulse{
-  0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.8;}
-  50%{transform:translate(-50%,-50%) scale(1.08);opacity:1;}
 }
 
 .tamu{
@@ -125,7 +119,7 @@ body{
   pointer-events:none;
 }
 
-/* ================= CONTENT ================= */
+/* ===== CONTENT ===== */
 #content{display:none;}
 
 .safe{
@@ -136,10 +130,10 @@ body{
 }
 
 .section{
-  margin-bottom:80px;
+  margin-bottom:90px;
 }
 
-/* per baris */
+/* per BARIS (bukan per kata) */
 .text-line{
   display:block;
   transition:opacity .35s ease, transform .35s ease;
@@ -158,7 +152,7 @@ h2{
   opacity:.9;
 }
 
-/* ================= MAP ================= */
+/* ===== MAP ===== */
 .map-card{
   margin-top:28px;
   border:1px solid rgba(184,164,106,.3);
@@ -253,106 +247,78 @@ h2{
 </div>
 
 <script>
-/* ===== Nama tamu dari URL ===== */
-const p=new URLSearchParams(location.search);
-const t=p.get("to");
-if(t) document.getElementById("namaTamu").innerText=decodeURIComponent(t).trim();
+/* ===== Nama tamu ===== */
+const p = new URLSearchParams(location.search);
+const t = p.get("to");
+if(t) document.getElementById("namaTamu").innerText = decodeURIComponent(t).trim();
 
-/* ===== Musik play sekali ===== */
-const music=document.getElementById("bgMusic");
-let started=false;
+/* ===== Musik ===== */
+const music = document.getElementById("bgMusic");
+let started = false;
 
 function openInvitation(){
   if(!started){
     music.play();
-    started=true;
+    started = true;
   }
-  const cover=document.getElementById("cover");
-  cover.classList.add("open");
-
+  document.getElementById("cover").classList.add("open");
   setTimeout(()=>{
-    cover.remove();
+    document.getElementById("cover").remove();
     document.getElementById("content").style.display="block";
     document.getElementById("frame").classList.add("show");
-    wrapLines();
+    wrapByBreak();
     applyFade();
   },600);
 }
 
-/* ===== AUTO WRAP PER BARIS ===== */
-function wrapLines(){
+/* ===== Bungkus BARIS berdasarkan <br> ===== */
+function wrapByBreak(){
   document.querySelectorAll(".section p").forEach(p=>{
     if(p.dataset.wrapped) return;
     p.dataset.wrapped="1";
 
-    const words=p.innerHTML.replace(/<br\s*\/?>/gi," \n ").split(/\s+/);
+    const parts = p.innerHTML.split(/<br\s*\/?>/i);
     p.innerHTML="";
 
-    const temp=document.createElement("span");
-    temp.style.visibility="hidden";
-    temp.style.whiteSpace="nowrap";
-    document.body.appendChild(temp);
-
-    let line="";
-    words.forEach(w=>{
-      if(w==="\n"){
-        if(line.trim()){
-          const s=document.createElement("span");
-          s.className="text-line";
-          s.innerHTML=line.trim();
-          p.appendChild(s);
-          p.appendChild(document.createElement("br"));
-        }
-        line="";
-        return;
-      }
-      temp.innerHTML=line+" "+w;
-      if(temp.offsetWidth>p.clientWidth && line!==""){
-        const s=document.createElement("span");
-        s.className="text-line";
-        s.innerHTML=line.trim();
-        p.appendChild(s);
-        p.appendChild(document.createElement("br"));
-        line=w;
-      }else{
-        line+=" "+w;
-      }
+    parts.forEach((part,i)=>{
+      const span=document.createElement("span");
+      span.className="text-line";
+      span.innerHTML=part.trim();
+      p.appendChild(span);
+      if(i<parts.length-1) p.appendChild(document.createElement("br"));
     });
-    if(line.trim()){
-      const s=document.createElement("span");
-      s.className="text-line";
-      s.innerHTML=line.trim();
-      p.appendChild(s);
-    }
-    document.body.removeChild(temp);
   });
 }
 
-/* ===== FADE PER BARIS DI FRAME ===== */
+/* ===== Fade hanya saat menyentuh frame ===== */
 function applyFade(){
-  const vh=window.innerHeight;
-  const zone=90;
-  document.querySelectorAll(".text-line").forEach(el=>{
-    const r=el.getBoundingClientRect();
-    let opacity=1,offset=0;
+  const vh = window.innerHeight;
+  const zone = 90;
 
-    if(r.top<zone){
-      const p=Math.max(r.top/zone,0);
-      opacity=p;
-      offset=(1-p)*-6;
+  document.querySelectorAll(".text-line").forEach(el=>{
+    const r = el.getBoundingClientRect();
+    let opacity = 1;
+    let offset = 0;
+
+    if(r.top < zone){
+      const p = Math.max(r.top/zone,0);
+      opacity = p;
+      offset = (1-p)*-6;
     }
-    if(vh-r.bottom<zone){
-      const p=Math.max((vh-r.bottom)/zone,0);
-      opacity=p;
-      offset=(1-p)*6;
+
+    if(vh - r.bottom < zone){
+      const p = Math.max((vh-r.bottom)/zone,0);
+      opacity = p;
+      offset = (1-p)*6;
     }
-    el.style.opacity=opacity;
-    el.style.transform=`translateY(${offset}px)`;
+
+    el.style.opacity = opacity;
+    el.style.transform = `translateY(${offset}px)`;
   });
 }
 
-window.addEventListener("scroll",applyFade,{passive:true});
-window.addEventListener("resize",()=>{wrapLines();applyFade();});
+window.addEventListener("scroll", applyFade, {passive:true});
+window.addEventListener("resize", applyFade);
 </script>
 
 </body>
