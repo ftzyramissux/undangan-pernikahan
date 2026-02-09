@@ -3,87 +3,99 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Undangan Pernikahan</title>
 <title>Fery & Lisa</title>
 
 <style>
 :root{
+  --bg:#0f0f0f;
+  --gold:#bfa76a;
+  --text:#eaeaea;
   --bg:#0b0b0b;
   --gold:#b8a46a;
   --text:#e6e6e6;
 }
 
-*{box-sizing:border-box;}
-
 body{
   margin:0;
+  font-family: "Georgia", serif;
   background:var(--bg);
   color:var(--text);
-  font-family:"Georgia", serif;
+  font-family: "Georgia", serif;
   line-height:1.7;
 }
 
-/* ================= FRAME ================= */
-.frame{
+/* ===== COVER ===== */
+/* COVER */
+#cover{
   position:fixed;
-  inset:16px;
-  pointer-events:none;
-  z-index:50;
-  opacity:0;
-  transition:opacity .6s ease;
+  inset:0;
+@@ -28,162 +29,140 @@
+  align-items:center;
+  justify-content:center;
+  z-index:10;
+  transition:opacity .8s ease;
 }
-.frame.show{opacity:1;}
-.frame span{
-  position:absolute;
-  width:30px;
-  height:30px;
-  border-style:solid;
-  border-color:rgba(184,164,106,.45);
+
+.cover-box{
+  border:1px solid var(--gold);
+  padding:40px 30px;
+.cover-inner{
+  text-align:center;
+  max-width:300px;
 }
-.frame .tl{top:0;left:0;border-width:1px 0 0 1px;}
-.frame .tr{top:0;right:0;border-width:1px 1px 0 0;}
-.frame .bl{bottom:0;left:0;border-width:0 0 1px 1px;}
-.frame .br{bottom:0;right:0;border-width:0 1px 1px 0;}
 
-/* ================= COVER ================= */
-    #cover {
-      position: fixed;
-      inset: 0;
-      background: linear-gradient(135deg, #c9a24d, #f5e6c8);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-    }
+.cover-box h1{
+  margin:0;
+  font-size:26px;
+  letter-spacing:1px;
+.cover-inner h1{
+  font-size:28px;
+  letter-spacing:2px;
+  color:var(--gold);
+  margin:0;
+}
 
-    .envelope {
-      background: black;
-      padding: 35px 30px;
-      border-radius: 14px;
-      text-align: center;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-      animation: float 2s ease-in-out infinite;
-    }
+.cover-box p{
+.cover-inner .line{
+  width:60px;
+  height:1px;
+  background:var(--gold);
+  margin:18px auto;
+}
 
-    .envelope h1 {
-      margin: 0;
-      font-size: 26px;
-    }
+.cover-inner p{
+  font-size:14px;
+  margin:12px 0 20px;
+  opacity:.85;
+  opacity:.8;
+}
 
-    .envelope p {
-      margin: 10px 0 20px;
-      font-size: 14px;
-      color: #555;
-    }
+.cover-box button{
+  border:1px solid var(--gold);
+  background:transparent;
+.cover-inner button{
+  margin-top:20px;
+  background:none;
+  border:none;
+  color:var(--gold);
+  padding:10px 26px;
+  font-size:14px;
+  letter-spacing:2px;
+  cursor:pointer;
+  transition:.3s;
+}
 
-    .envelope button {
-      padding: 12px 28px;
-      border: none;
-      background: #c9a24d;
-      color: gold;
-      font-size: 16px;
-      border-radius: 25px;
-      cursor: pointer;
-    }
+.cover-box button:hover{
+  background:var(--gold);
+  color:#000;
+}
+
+.tamu{
+  font-size:13px;
+  margin-top:6px;
+  opacity:.9;
+}
 
     @keyframes float {
       0%,100% { transform: translateY(0); }
