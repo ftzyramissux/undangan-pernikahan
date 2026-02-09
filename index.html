@@ -3,23 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Undangan Pernikahan</title>
+<title>Fery & Lisa</title>
 
 <style>
 :root{
-  --bg:#0f0f0f;
-  --gold:#bfa76a;
-  --text:#eaeaea;
+  --bg:#0b0b0b;
+  --gold:#b8a46a;
+  --text:#e6e6e6;
 }
 
 body{
   margin:0;
-  font-family: "Georgia", serif;
   background:var(--bg);
   color:var(--text);
+  font-family: "Georgia", serif;
+  line-height:1.7;
 }
 
-/* ===== COVER ===== */
+/* COVER */
 #cover{
   position:fixed;
   inset:0;
@@ -28,87 +29,82 @@ body{
   align-items:center;
   justify-content:center;
   z-index:10;
-  transition:opacity .8s ease;
 }
 
-.cover-box{
-  border:1px solid var(--gold);
-  padding:40px 30px;
+.cover-inner{
   text-align:center;
-  max-width:300px;
 }
 
-.cover-box h1{
+.cover-inner h1{
+  font-size:28px;
+  letter-spacing:2px;
+  color:var(--gold);
   margin:0;
-  font-size:26px;
-  letter-spacing:1px;
-  color:var(--gold);
 }
 
-.cover-box p{
-  font-size:14px;
-  margin:12px 0 20px;
-  opacity:.85;
-}
-
-.cover-box button{
-  border:1px solid var(--gold);
-  background:transparent;
-  color:var(--gold);
-  padding:10px 26px;
-  cursor:pointer;
-  transition:.3s;
-}
-
-.cover-box button:hover{
+.cover-inner .line{
+  width:60px;
+  height:1px;
   background:var(--gold);
-  color:#000;
+  margin:18px auto;
 }
 
-.tamu{
-  font-size:13px;
-  margin-top:6px;
-  opacity:.9;
+.cover-inner p{
+  font-size:14px;
+  opacity:.8;
 }
 
-/* ===== CONTENT ===== */
+.cover-inner button{
+  margin-top:20px;
+  background:none;
+  border:none;
+  color:var(--gold);
+  font-size:14px;
+  letter-spacing:2px;
+  cursor:pointer;
+}
+
+/* CONTENT */
 #content{
   display:none;
-  padding:60px 20px;
-  text-align:center;
-  animation:fadeUp 1s ease;
+  max-width:600px;
+  margin:auto;
+  padding:80px 20px;
 }
 
 .section{
-  margin-bottom:50px;
+  margin-bottom:70px;
+  text-align:center;
 }
 
 h2{
   color:var(--gold);
-  letter-spacing:1px;
-  margin-bottom:14px;
+  letter-spacing:2px;
+  font-size:16px;
+  margin-bottom:20px;
 }
 
-@keyframes fadeUp{
-  from{opacity:0; transform:translateY(20px);}
-  to{opacity:1; transform:translateY(0);}
+.small{
+  font-size:14px;
+  opacity:.85;
 }
 </style>
 </head>
 
 <body>
 
-<audio id="bgMusic" loop>
+<!-- AUDIO (TANPA LOOP) -->
+<audio id="bgMusic">
   <source src="musik.mp3" type="audio/mpeg">
 </audio>
 
 <!-- COVER -->
 <div id="cover">
-  <div class="cover-box">
-    <h1>Fery & Lisa</h1>
-    <p>Kepada Yth</p>
-    <div class="tamu" id="namaTamu">Tamu Undangan</div>
-    <button onclick="openInvitation()">Buka Undangan</button>
+  <div class="cover-inner">
+    <h1>FERY & LISA</h1>
+    <div class="line"></div>
+    <p id="namaTamu">Tamu Undangan</p>
+    <button onclick="openInvitation()">OPEN</button>
   </div>
 </div>
 
@@ -116,74 +112,57 @@ h2{
 <div id="content">
 
   <div class="section">
-    <h2>Assalamu’alaikum Warahmatullahi Wabarakatuh</h2>
-    <p>
+    <p class="small">
+      Assalamu’alaikum Warahmatullahi Wabarakatuh<br><br>
       Dengan memohon rahmat dan ridho Allah SWT,<br>
-      kami mengundang Bapak Ibu Saudara Saudari<br>
-      untuk menghadiri pernikahan kami.
+      kami mengundang Anda untuk hadir pada pernikahan kami
     </p>
   </div>
 
   <div class="section">
-    <h2>Mempelai Pria</h2>
+    <h2>MEMPELAI</h2>
     <p>
       <strong>Fery Yasin</strong><br>
-      Putra dari Bapak Udin Haryono<br>
-      dan Ibu Darti
-    </p>
-  </div>
-
-  <div class="section">
-    <h2>Mempelai Wanita</h2>
-    <p>
+      Putra Bapak Udin Haryono & Ibu Darti
+      <br><br>
       <strong>Lisa Wahyu Ningsih</strong><br>
-      Putri dari Bapak Wahyu Wimpy Rumahlaiselan<br>
-      dan Ibu Lilis Istining Widya
+      Putri Bapak Wahyu Wimpy Rumahlaiselan & Ibu Lilis Istining Widya
     </p>
   </div>
 
   <div class="section">
-    <h2>Akad Nikah</h2>
+    <h2>WAKTU & TEMPAT</h2>
     <p>
       Minggu, 27 Juli 2027<br>
-      08.00 WIB<br>
-      KUA Gg. Bengkok II No.1<br>
-      Baratajaya, Gubeng – Surabaya
+      08.00 WIB – Akad Nikah<br>
+      11.00 – 13.00 WIB – Resepsi
+      <br><br>
+      Kantor Urusan Agama<br>
+      Gg. Bengkok II No.1<br>
+      Baratajaya, Gubeng, Surabaya
     </p>
   </div>
 
   <div class="section">
-    <h2>Resepsi</h2>
-    <p>
-      Minggu, 27 Juli 2027<br>
-      11.00 – 13.00 WIB<br>
-      KUA Gg. Bengkok II No.1<br>
-      Baratajaya, Gubeng – Surabaya
-    </p>
-  </div>
-
-  <div class="section">
-    <p>
-      Merupakan suatu kehormatan dan kebahagiaan bagi kami<br>
-      apabila Bapak Ibu Saudara Saudari<br>
-      berkenan hadir dan memberikan doa restu.
+    <p class="small">
+      Merupakan kehormatan bagi kami<br>
+      atas kehadiran dan doa restu Anda
     </p>
   </div>
 
 </div>
 
 <script>
-const params = new URLSearchParams(window.location.search);
-const tamu = params.get("to");
-if(tamu) document.getElementById("namaTamu").innerText = tamu;
+/* Nama tamu */
+const params = new URLSearchParams(location.search);
+const t = params.get("to");
+if(t) document.getElementById("namaTamu").innerText = t;
 
+/* Open */
 function openInvitation(){
   document.getElementById("bgMusic").play();
-  document.getElementById("cover").style.opacity="0";
-  setTimeout(()=>{
-    document.getElementById("cover").style.display="none";
-    document.getElementById("content").style.display="block";
-  },700);
+  document.getElementById("cover").style.display="none";
+  document.getElementById("content").style.display="block";
 }
 </script>
 
