@@ -27,7 +27,7 @@ body{
   position:fixed;
   inset:16px;
   pointer-events:none;
-  z-index:50;
+  z-index:40;
   opacity:0;
   transition:opacity .6s ease;
 }
@@ -56,7 +56,6 @@ body{
   transition:opacity .6s ease;
 }
 
-/* amplop kecil */
 .envelope{
   width:220px;
   height:140px;
@@ -121,7 +120,6 @@ body{
   opacity:.8;
 }
 
-/* cover hide */
 #cover.open{
   opacity:0;
   pointer-events:none;
@@ -139,8 +137,13 @@ body{
 
 .section{
   margin-bottom:80px;
-  will-change:transform,opacity;
-  transition:opacity .4s ease, transform .4s ease;
+}
+
+/* per baris */
+.text-line{
+  display:block;
+  transition:opacity .35s ease, transform .35s ease;
+  will-change:opacity, transform;
 }
 
 h2{
@@ -152,7 +155,7 @@ h2{
 
 .small{
   font-size:14px;
-  opacity:.85;
+  opacity:.9;
 }
 
 /* ================= MAP ================= */
@@ -213,10 +216,9 @@ h2{
     <div class="section">
       <h2>MEMPELAI</h2>
       <p>
-        <strong>Fery Yasin</strong><br>
-        Putra Bapak Udin Haryono & Ibu Darti
-        <br><br>
-        <strong>Lisa Wahyu Ningsih</strong><br>
+        Fery Yasin<br>
+        Putra Bapak Udin Haryono & Ibu Darti<br><br>
+        Lisa Wahyu Ningsih<br>
         Putri Bapak Wahyu Wimpy Rumahlaiselan & Ibu Lilis Istining Widya
       </p>
     </div>
@@ -226,8 +228,7 @@ h2{
       <p>
         Minggu, 27 Juli 2027<br>
         08.00 WIB – Akad Nikah<br>
-        11.00 – 13.00 WIB – Resepsi
-        <br><br>
+        11.00 – 13.00 WIB – Resepsi<br><br>
         Kantor Urusan Agama<br>
         Gg. Bengkok II No.1<br>
         Baratajaya, Gubeng, Surabaya
@@ -252,12 +253,12 @@ h2{
 </div>
 
 <script>
-/* nama tamu */
+/* ===== Nama tamu dari URL ===== */
 const p=new URLSearchParams(location.search);
 const t=p.get("to");
-if(t) document.getElementById("namaTamu").innerText=t;
+if(t) document.getElementById("namaTamu").innerText=decodeURIComponent(t).trim();
 
-/* musik play sekali */
+/* ===== Musik play sekali ===== */
 const music=document.getElementById("bgMusic");
 let started=false;
 
@@ -273,36 +274,85 @@ function openInvitation(){
     cover.remove();
     document.getElementById("content").style.display="block";
     document.getElementById("frame").classList.add("show");
+    wrapLines();
+    applyFade();
   },600);
 }
 
-/* micro parallax + fade (edge only) */
-(() => {
-  const sections=document.querySelectorAll(".section");
-  function apply(){
-    const vh=window.innerHeight;
-    sections.forEach(el=>{
-      const r=el.getBoundingClientRect();
-      let offset=0,opacity=1;
+/* ===== AUTO WRAP PER BARIS ===== */
+function wrapLines(){
+  document.querySelectorAll(".section p").forEach(p=>{
+    if(p.dataset.wrapped) return;
+    p.dataset.wrapped="1";
 
-      if(r.top<vh*0.25){
-        const p=Math.max(r.top/(vh*0.25),0);
-        offset=(1-p)*-8;
-        opacity=p;
+    const words=p.innerHTML.replace(/<br\s*\/?>/gi," \n ").split(/\s+/);
+    p.innerHTML="";
+
+    const temp=document.createElement("span");
+    temp.style.visibility="hidden";
+    temp.style.whiteSpace="nowrap";
+    document.body.appendChild(temp);
+
+    let line="";
+    words.forEach(w=>{
+      if(w==="\n"){
+        if(line.trim()){
+          const s=document.createElement("span");
+          s.className="text-line";
+          s.innerHTML=line.trim();
+          p.appendChild(s);
+          p.appendChild(document.createElement("br"));
+        }
+        line="";
+        return;
       }
-      if(vh-r.bottom<vh*0.25){
-        const p=Math.max((vh-r.bottom)/(vh*0.25),0);
-        offset=(1-p)*8;
-        opacity=p;
+      temp.innerHTML=line+" "+w;
+      if(temp.offsetWidth>p.clientWidth && line!==""){
+        const s=document.createElement("span");
+        s.className="text-line";
+        s.innerHTML=line.trim();
+        p.appendChild(s);
+        p.appendChild(document.createElement("br"));
+        line=w;
+      }else{
+        line+=" "+w;
       }
-      el.style.transform=`translateY(${offset}px)`;
-      el.style.opacity=opacity;
     });
-  }
-  window.addEventListener("scroll",apply,{passive:true});
-  window.addEventListener("resize",apply);
-  apply();
-})();
+    if(line.trim()){
+      const s=document.createElement("span");
+      s.className="text-line";
+      s.innerHTML=line.trim();
+      p.appendChild(s);
+    }
+    document.body.removeChild(temp);
+  });
+}
+
+/* ===== FADE PER BARIS DI FRAME ===== */
+function applyFade(){
+  const vh=window.innerHeight;
+  const zone=90;
+  document.querySelectorAll(".text-line").forEach(el=>{
+    const r=el.getBoundingClientRect();
+    let opacity=1,offset=0;
+
+    if(r.top<zone){
+      const p=Math.max(r.top/zone,0);
+      opacity=p;
+      offset=(1-p)*-6;
+    }
+    if(vh-r.bottom<zone){
+      const p=Math.max((vh-r.bottom)/zone,0);
+      opacity=p;
+      offset=(1-p)*6;
+    }
+    el.style.opacity=opacity;
+    el.style.transform=`translateY(${offset}px)`;
+  });
+}
+
+window.addEventListener("scroll",applyFade,{passive:true});
+window.addEventListener("resize",()=>{wrapLines();applyFade();});
 </script>
 
 </body>
