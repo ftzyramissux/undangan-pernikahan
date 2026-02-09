@@ -16,19 +16,45 @@ body{
   margin:0;
   background:var(--bg);
   color:var(--text);
-  font-family: "Georgia", serif;
+  font-family:"Georgia", serif;
   line-height:1.7;
+  overflow-x:hidden;
 }
 
-/* COVER */
+/* ================= AUDIO FIX ================= */
+audio{display:none}
+
+/* ================= AMPLOP COVER ================= */
 #cover{
   position:fixed;
   inset:0;
+  z-index:10;
+  display:flex;
+}
+
+.cover-panel{
+  width:50%;
   background:var(--bg);
   display:flex;
   align-items:center;
   justify-content:center;
-  z-index:10;
+  transition:transform 1.2s ease;
+}
+
+.cover-panel.left{
+  border-right:1px solid rgba(184,164,106,.3);
+}
+
+.cover-panel.right{
+  border-left:1px solid rgba(184,164,106,.3);
+}
+
+#cover.open .left{
+  transform:translateX(-100%);
+}
+
+#cover.open .right{
+  transform:translateX(100%);
 }
 
 .cover-inner{
@@ -36,10 +62,10 @@ body{
 }
 
 .cover-inner h1{
+  margin:0;
   font-size:28px;
   letter-spacing:2px;
   color:var(--gold);
-  margin:0;
 }
 
 .cover-inner .line{
@@ -55,7 +81,7 @@ body{
 }
 
 .cover-inner button{
-  margin-top:20px;
+  margin-top:22px;
   background:none;
   border:none;
   color:var(--gold);
@@ -64,17 +90,17 @@ body{
   cursor:pointer;
 }
 
-/* CONTENT */
+/* ================= CONTENT ================= */
 #content{
   display:none;
   max-width:600px;
   margin:auto;
-  padding:80px 20px;
+  padding:100px 28px;
+  text-align:center;
 }
 
 .section{
   margin-bottom:70px;
-  text-align:center;
 }
 
 h2{
@@ -88,24 +114,70 @@ h2{
   font-size:14px;
   opacity:.85;
 }
+
+/* ================= FRAME CORNER GAP ================= */
+.frame{
+  position:fixed;
+  inset:14px;
+  pointer-events:none;
+  z-index:9999;
+  opacity:0;
+  transition:opacity .8s ease;
+}
+
+.frame.show{opacity:1}
+
+.frame span{
+  position:absolute;
+  width:32px;
+  height:32px;
+  border-style:solid;
+  border-color:rgba(184,164,106,.55);
+}
+
+.frame .tl{top:0;left:0;border-width:1px 0 0 1px;}
+.frame .tr{top:0;right:0;border-width:1px 1px 0 0;}
+.frame .bl{bottom:0;left:0;border-width:0 0 1px 1px;}
+.frame .br{bottom:0;right:0;border-width:0 1px 1px 0;}
+
+/* ================= MAP ================= */
+.map-link{
+  display:inline-block;
+  margin-top:18px;
+  font-size:14px;
+  color:var(--gold);
+  text-decoration:none;
+  border-bottom:1px solid var(--gold);
+}
 </style>
 </head>
 
 <body>
 
-<!-- AUDIO (TANPA LOOP) -->
-<audio id="bgMusic">
+<!-- FRAME -->
+<div class="frame" id="frame">
+  <span class="tl"></span>
+  <span class="tr"></span>
+  <span class="bl"></span>
+  <span class="br"></span>
+</div>
+
+<!-- AUDIO (ANTI RESTART) -->
+<audio id="bgMusic" loop preload="auto">
   <source src="musik.mp3" type="audio/mpeg">
 </audio>
 
-<!-- COVER -->
+<!-- AMPLOP COVER -->
 <div id="cover">
-  <div class="cover-inner">
-    <h1>FERY & LISA</h1>
-    <div class="line"></div>
-    <p id="namaTamu">Tamu Undangan</p>
-    <button onclick="openInvitation()">OPEN</button>
+  <div class="cover-panel left">
+    <div class="cover-inner">
+      <h1>FERY & LISA</h1>
+      <div class="line"></div>
+      <p id="namaTamu">Tamu Undangan</p>
+      <button onclick="openInvitation()">OPEN</button>
+    </div>
   </div>
+  <div class="cover-panel right"></div>
 </div>
 
 <!-- CONTENT -->
@@ -141,6 +213,11 @@ h2{
       Gg. Bengkok II No.1<br>
       Baratajaya, Gubeng, Surabaya
     </p>
+
+    <a class="map-link" target="_blank"
+    href="https://www.google.com/maps/search/?api=1&query=Kantor+Urusan+Agama+Gg.+Bengkok+II+No.1+Baratajaya+Gubeng+Surabaya">
+      Lihat Lokasi di Google Maps
+    </a>
   </div>
 
   <div class="section">
@@ -158,11 +235,25 @@ const params = new URLSearchParams(location.search);
 const t = params.get("to");
 if(t) document.getElementById("namaTamu").innerText = t;
 
-/* Open */
+/* Musik benar-benar hanya start SEKALI */
+let started = false;
+const music = document.getElementById("bgMusic");
+
 function openInvitation(){
-  document.getElementById("bgMusic").play();
-  document.getElementById("cover").style.display="none";
-  document.getElementById("content").style.display="block";
+  if(!started){
+    music.currentTime = 0;
+    music.play();
+    started = true;
+  }
+
+  const cover = document.getElementById("cover");
+  cover.classList.add("open");
+
+  setTimeout(()=>{
+    cover.style.display="none";
+    document.getElementById("content").style.display="block";
+    document.getElementById("frame").classList.add("show");
+  },1200);
 }
 </script>
 
